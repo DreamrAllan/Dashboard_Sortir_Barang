@@ -74,7 +74,7 @@ class TransactionController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil ditambahkan!');
+            return redirect('/transactions')->with('success', 'Transaksi berhasil ditambahkan!');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -97,7 +97,7 @@ class TransactionController extends Controller
             $transaction->delete();
             DB::commit();
 
-            return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dihapus!');
+            return redirect('/transactions')->with('success', 'Transaksi berhasil dihapus!');
 
         } catch (\Exception $e) {
             DB::rollBack();

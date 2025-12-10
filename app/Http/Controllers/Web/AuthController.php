@@ -36,7 +36,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        return redirect('/dashboard');
     }
 
     public function login(Request $request)
@@ -46,9 +46,9 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::guard('web')->attempt($credentials)) {
-        $request->session()->regenerate();
-        return redirect()->intended('/dashboard');
+        if (Auth::guard('web')->attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            return redirect('/dashboard');
         }
 
         return back()->withErrors([
@@ -61,6 +61,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login');
+        return redirect('/login');
     }
 }

@@ -51,7 +51,7 @@ class ItemController extends Controller
         $data['code'] = Item::generateCode();
 
         Item::create($data);
-        return redirect()->route('items.index')->with('success', 'Barang berhasil ditambahkan!');
+        return redirect('/items')->with('success', 'Barang berhasil ditambahkan!');
     }
 
     public function edit(Item $item)
@@ -70,12 +70,12 @@ class ItemController extends Controller
         ]);
 
         $item->update($request->except('stock'));
-        return redirect()->route('items.index')->with('success', 'Barang berhasil diupdate!');
+        return redirect('/items')->with('success', 'Barang berhasil diupdate!');
     }
 
     public function destroy(Item $item)
     {
         $item->delete();
-        return redirect()->route('items.index')->with('success', 'Barang berhasil dihapus!');
+        return redirect('/items')->with('success', 'Barang berhasil dihapus!');
     }
 }

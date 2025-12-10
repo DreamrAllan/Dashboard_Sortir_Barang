@@ -27,7 +27,7 @@ class CategoryController extends Controller
         ]);
 
         Category::create($request->all());
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan!');
+        return redirect('/categories')->with('success', 'Kategori berhasil ditambahkan!');
     }
 
     public function edit(Category $category)
@@ -43,7 +43,7 @@ class CategoryController extends Controller
         ]);
 
         $category->update($request->all());
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil diupdate!');
+        return redirect('/categories')->with('success', 'Kategori berhasil diupdate!');
     }
 
     public function destroy(Category $category)
@@ -53,6 +53,6 @@ class CategoryController extends Controller
         }
 
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus!');
+        return redirect('/categories')->with('success', 'Kategori berhasil dihapus!');
     }
 }
