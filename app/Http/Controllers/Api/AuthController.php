@@ -37,11 +37,8 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'User registered successfully',
-            'data' => [
-                'user' => $user,
-                'access_token' => $token,
-                'token_type' => 'Bearer'
-            ]
+            'token' => $token,
+            'user' => $user
         ], 201);
     }
 
@@ -74,32 +71,27 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Login berhasil',
-            'data' => [
-                'user' => $user,
-                'access_token' => $token,
-                'token_type' => 'Bearer'
-            ]
+            'token' => $token,
+            'user' => $user
         ]);
     }
 
     public function logout(Request $request)
     {
-        Auth::logout(); // <-- ini yang benar untuk session-based auth
+        // Revoke current token for API
+        $request->user()->currentAccessToken()->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('login')->with('success', 'Logout berhasil!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout berhasil'
+        ]);
     }
-
 
     public function profile(Request $request)
     {
         return response()->json([
             'success' => true,
-            'data' => [
-                'user' => $request->user()
-            ]
+            'user' => $request->user()
         ]);
     }
 }
